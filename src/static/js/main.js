@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nodeColorInput = document.getElementById("node-color");
   const edgeColorInput = document.getElementById("edge-color");
   const fillColorInput = document.getElementById("fill-color");
-  const toggleAxesCheckbox = document.getElementById("toggle-axes");
+  // const toggleAxesCheckbox = document.getElementById("toggle-axes");
   const plotAreaDiv = document.getElementById("plot-area");
   const drawNodeDistributionButton = document.getElementById(
     "draw-node-distribution"
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nodeColorInput.value = "red";
     edgeColorInput.value = "black";
     fillColorInput.value = "lightblue";
-    toggleAxesCheckbox.checked = true;
+    // toggleAxesCheckbox.checked = true;
 
     // vertex1xInput.value = "";
     // vertex1yInput.value = "";
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
       node_color: nodeColorInput.value,
       edge_color: edgeColorInput.value,
       fill_color: fillColorInput.value,
-      show_axes: toggleAxesCheckbox.checked,
+      // show_axes: toggleAxesCheckbox.checked,
     };
 
     plotAreaDiv.innerHTML = "<p>正在绘图...</p>";
