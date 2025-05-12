@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>三角形上的数值积分演示demo</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/main.js"></script>
+        <!-- KaTeX for LaTeX rendering -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
+            integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC"
+            crossorigin="anonymous">
+        <script defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"
+            integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja"
+            crossorigin="anonymous"></script>
+        <script defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+            integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1>三角形上的数值积分演示demo</h1>
+
+        <div class="container">
+            <!-- Left Panel -->
+            <div class="panel left-panel">
+                <div>
+                    <label for="integration-formula-selector">积分公式选择器:</label>
+                    <select id="integration-formula-selector"></select>
+                </div>
+                <div>
+                    <label for="function-expression">f(x, y) = </label>
+                    <input type="text" id="function-expression"
+                        placeholder="函数表达式, 支持latex语法">
+                </div>
+                <div>
+                    <p>积分公式说明:</p>
+                    <div id="formula-description" class="description-box"></div>
+                </div>
+                <div>
+                    <label for="custom-formula-name">自定义积分公式的名称:</label>
+                    <input type="text" id="custom-formula-name"
+                        placeholder="默认为custom">
+                </div>
+                <div>
+                    <label for="custom-formula-nodes">自定义积分公式的节点及权重:</label>
+                    <textarea id="custom-formula-nodes" rows="5"
+                        placeholder="python或js样式的二维数组, n x 3"></textarea>
+                </div>
+                <div>
+                    <p>计算结果的输出:</p>
+                    <div id="calculation-output" class="output-box"></div>
+                </div>
+                <div>
+                    <button id="start-calculation">开始计算</button>
+                    <!-- <button id="pause-resume-calculation" disabled>暂停/继续</button>
+                <button id="cancel-calculation" disabled>取消计算</button> -->
+                    <button id="initialize-calculation">初始化</button>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="panel right-panel">
+                <h2>积分节点分布情况图</h2>
+                <div>
+                    <label for="node-color">积分节点颜色:</label>
+                    <input type="text" id="node-color" value="red">
+                </div>
+                <div>
+                    <label for="edge-color">边的颜色:</label>
+                    <input type="text" id="edge-color" value="black">
+                </div>
+                <div>
+                    <label for="fill-color">区域填充颜色:</label>
+                    <input type="text" id="fill-color" value="lightblue">
+                </div>
+                <!-- <div>
+                <label for="toggle-axes">显示/隐藏坐标轴:</label>
+                <input type="checkbox" id="toggle-axes" checked>
+            </div> -->
+                <div id="plot-area" class="plot-area">
+                    <!-- 绘图区 -->
+                    <p>绘图区</p>
+                </div>
+                <div>
+                    <button id="draw-node-distribution">绘制节点分布</button>
+                    <button id="save-image" disabled>保存图片</button>
+                </div>
+                <div>
+                    <label for="vertex1-x">第一个顶点坐标 (x,y):</label>
+                    <input type="text" id="vertex1-x" placeholder="x1">
+                    <input type="text" id="vertex1-y" placeholder="y1">
+                </div>
+                <div>
+                    <label for="vertex2-x">第二个顶点坐标 (x,y):</label>
+                    <input type="text" id="vertex2-x" placeholder="x2">
+                    <input type="text" id="vertex2-y" placeholder="y2">
+                </div>
+                <div>
+                    <label for="vertex3-x">第三个顶点坐标 (x,y):</label>
+                    <input type="text" id="vertex3-x" placeholder="x3">
+                    <input type="text" id="vertex3-y" placeholder="y3">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
