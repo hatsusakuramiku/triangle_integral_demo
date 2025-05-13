@@ -19,6 +19,22 @@
             src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
             integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"
             crossorigin="anonymous"></script>
+        <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    renderMathInElement(document.body, {
+                        // options
+                        // `delimiters` 是渲染启动所必需的。
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        // 自动渲染整个页面
+                        throwOnError : false
+                    });
+                });
+        </script>
     </head>
     <body>
         <h1>三角形上的数值积分演示demo</h1>
@@ -31,7 +47,7 @@
                     <select id="integration-formula-selector"></select>
                 </div>
                 <div>
-                    <label for="function-expression">f(x, y) = </label>
+                    <label for="function-expression">$f(x, y) = $</label>
                     <input type="text" id="function-expression"
                         placeholder="函数表达式, 支持latex语法">
                 </div>
@@ -46,6 +62,7 @@
                 </div>
                 <div>
                     <label for="custom-formula-nodes">自定义积分公式的节点及权重:</label>
+                    <p>注意！输入的积分节点应当是面积坐标与积分权重，且与设定的三角形三顶点坐标一一对应！</p>
                     <textarea id="custom-formula-nodes" rows="5"
                         placeholder="python或js样式的二维数组, n x 3"></textarea>
                 </div>
@@ -55,9 +72,10 @@
                 </div>
                 <div>
                     <button id="start-calculation">开始计算</button>
-                    <button id="pause-resume-calculation"
+                    <!-- <button id="pause-resume-calculation"
                         disabled>暂停/继续</button>
-                    <button id="cancel-calculation" disabled>取消计算</button>
+                    <button id="cancel-calculation" disabled>取消计算</button> -->
+                    <button id="download-button">下载公式</button>
                     <button id="initialize-calculation">初始化</button>
                 </div>
             </div>
@@ -90,17 +108,20 @@
                     <button id="save-image" disabled>保存图片</button>
                 </div>
                 <div>
-                    <label for="vertex1-x">第一个顶点坐标 (x,y):</label>
+                    <label for="vertex1-x">第一个顶点坐标 (x,y)，与 $\lambda_1$
+                        对应:</label>
                     <input type="text" id="vertex1-x" placeholder="x1">
                     <input type="text" id="vertex1-y" placeholder="y1">
                 </div>
                 <div>
-                    <label for="vertex2-x">第二个顶点坐标 (x,y):</label>
+                    <label for="vertex2-x">第二个顶点坐标 (x,y)，与: $\lambda_2$
+                        对应:</label>
                     <input type="text" id="vertex2-x" placeholder="x2">
                     <input type="text" id="vertex2-y" placeholder="y2">
                 </div>
                 <div>
-                    <label for="vertex3-x">第三个顶点坐标 (x,y):</label>
+                    <label for="vertex3-x">第三个顶点坐标 (x,y)，与 $\lambda_3$
+                        对应:</label>
                     <input type="text" id="vertex3-x" placeholder="x3">
                     <input type="text" id="vertex3-y" placeholder="y3">
                 </div>

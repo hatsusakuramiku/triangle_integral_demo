@@ -2,12 +2,12 @@
 import sys
 import os
 from latex2sympy2 import latex2sympy
-
-from sympy.parsing.mathematica import parse_mathematica
+import requests
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))  # DON'T CHANGE THIS !!!
 
 from flask import Flask, request, jsonify, send_from_directory
+
 import json
 import numpy as np
 import matplotlib
@@ -44,10 +44,10 @@ def draw_triangle_and_nodes(
         vertices, closed=True, edgecolor=edge_color, facecolor=fill_color, linewidth=1.5
     )
     ax.add_patch(triangle_patch)
-
     # Draw nodes
     if nodes:
         nodes = process_nodes(vertices, nodes)
+
         node_x = [n[0] for n in nodes]
         node_y = [n[1] for n in nodes]
         ax.scatter(
@@ -88,20 +88,20 @@ def draw_triangle_and_nodes(
     return img_base64
 
 
-def process_nodes(triangle_vertices: np.array, integral_nodes: np.ndarray) -> np.array:
-    triangle_vertices = np.array(triangle_vertices)
-    integral_nodes = np.array(integral_nodes)
-    vA = triangle_vertices[0, :]
-    vB = triangle_vertices[1, :]
-    vC = triangle_vertices[2, :]
-
-    lambda_1 = integral_nodes[:, 0]
-    lambda_2 = integral_nodes[:, 1]
-    lambda_3 = 1 - lambda_1 - lambda_2
-
-    mapped_nodes_x = lambda_1 * vA[0] + lambda_2 * vB[0] + lambda_3 * vC[0]
-    mapped_nodes_y = lambda_1 * vA[1] + lambda_2 * vB[1] + lambda_3 * vC[1]
-    return np.column_stack((mapped_nodes_x, mapped_nodes_y)).tolist()
+def process_nodes(
+    triangle_vertices: list[list[float]], integral_nodes: list[list[float]]
+) -> list[list[float]]:
+    vA, vB, vC = triangle_vertices
+    mapped_x = [
+        vA[0] * node[0] + vB[0] * node[1] + vC[0] * (1.0 - node[0] - node[1])
+        for node in integral_nodes
+    ]
+    mapped_y = [
+        vA[1] * node[0] + vB[1] * node[1] + vC[1] * (1.0 - node[0] - node[1])
+        for node in integral_nodes
+    ]
+    mapped_nodes = np.column_stack((mapped_x, mapped_y))
+    return mapped_nodes.tolist()
 
 
 def calculate_triangle_square(triangle_vertices) -> float:
@@ -134,34 +134,78 @@ def index():
 
 @app.route("/api/formulas")
 def get_formulas():
-    try:
-        formulas_path = os.path.join(os.path.dirname(__file__), "triangle_formula.json")
-        with open(formulas_path, "r", encoding="utf-8") as f:
-            original_formulas = json.load(f)
+    """
+    API endpoint to serve triangle integration formulas.
 
-        transformed_formulas = {}
-        for key, formula in original_formulas.items():
-            data_array = formula["data"]
-            foormula_description = formula["description"]
-            nodes = [[item[0], item[1]] for item in data_array]
-            weights = [item[2] for item in data_array]
-            transformed_formulas[key] = {
-                "name": key,  # Use the key as the name
-                "description": (
-                    foormula_description
-                    if foormula_description is not None
-                    else f"预设的积分公式 {key}"
-                ),  # Placeholder description
-                "nodes": nodes,
-                "weights": weights,
-            }
-        return jsonify(transformed_formulas)
-    except FileNotFoundError:
-        app.logger.error("triangle_formula.json not found")
-        return jsonify({"error": "triangle_formula.json not found"}), 404
-    except Exception as e:
-        app.logger.error(f"Error in /api/formulas: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+    This function will first try to fetch the formula data from an online source.
+    If the request fails, it will try to load the formula data from a local file instead.
+    If the local file is not found, it will return a 500 error with the error message.
+
+    Returns:
+    A JSON response containing the formula data.
+    """
+    try:
+        return get_formulas_online()
+    except requests.exceptions.RequestException or Exception as e:
+        app.logger.warning(f"Error in /api/formulas: {str(e)}, trying offline")
+        try:
+            return get_formulas_offline()
+        except FileNotFoundError or Exception as e:
+            app.logger.error(f"Error in /api/formulas: {str(e)}")
+            return jsonify({"error": str(e)}), 500
+
+
+def get_formulas_online():
+    formula_url = (
+        "https://hsmkhexo.s3.ap-northeast-1.amazonaws.com/other/triangle_formula.json"
+    )
+    # try:
+    response = requests.get(formula_url)
+    response.raise_for_status()  # 检查HTTP请求是否成功
+
+    original_formulas = response.json()
+    transformed_formulas = {}
+    for key, formula in original_formulas.items():
+        data_array = formula["data"]
+        formula_description = formula.get("description")  # 使用get()避免KeyError
+        nodes = [[item[0], item[1]] for item in data_array]
+        weights = [item[2] for item in data_array]
+        transformed_formulas[key] = {
+            "name": key,
+            "description": (
+                formula_description
+                if formula_description is not None
+                else f"预设的积分公式 {key}"
+            ),
+            "nodes": nodes,
+            "weights": weights,
+        }
+    return jsonify(transformed_formulas)
+
+
+def get_formulas_offline():
+
+    formulas_path = os.path.join(os.path.dirname(__file__), "triangle_formula.json")
+    with open(formulas_path, "r", encoding="utf-8") as f:
+        original_formulas = json.load(f)
+
+    transformed_formulas = {}
+    for key, formula in original_formulas.items():
+        data_array = formula["data"]
+        foormula_description = formula["description"]
+        nodes = [[item[0], item[1]] for item in data_array]
+        weights = [item[2] for item in data_array]
+        transformed_formulas[key] = {
+            "name": key,  # Use the key as the name
+            "description": (
+                foormula_description
+                if foormula_description is not None
+                else f"预设的积分公式 {key}"
+            ),  # Placeholder description
+            "nodes": nodes,
+            "weights": weights,
+        }
+    return jsonify(transformed_formulas)
 
 
 @app.route("/api/plot", methods=["POST"])
@@ -266,4 +310,4 @@ def calculate_integral():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5001)), debug=True)

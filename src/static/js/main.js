@@ -34,24 +34,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const vertex3xInput = document.getElementById("vertex3-x");
   const vertex3yInput = document.getElementById("vertex3-y");
 
+  const downloadButton = document.getElementById("download-button");
+
   let triangleFormulas = {};
 
   function setDefaultVertices() {
     vertex1xInput.value = "0";
     vertex1yInput.value = "0";
-    vertex2xInput.value = "0";
-    vertex2yInput.value = "1";
-    vertex3xInput.value = "1";
-    vertex3yInput.value = "0";
-    console.log(
-      "Default vertices set:",
-      vertex1xInput.value,
-      vertex1yInput.value,
-      vertex2xInput.value,
-      vertex2yInput.value,
-      vertex3xInput.value,
-      vertex3yInput.value
-    );
+    vertex2xInput.value = "1";
+    vertex2yInput.value = "0";
+    vertex3xInput.value = "0";
+    vertex3yInput.value = "1";
+    // console.log(
+    //   "Default vertices set:",
+    //   vertex1xInput.value,
+    //   vertex1yInput.value,
+    //   vertex2xInput.value,
+    //   vertex2yInput.value,
+    //   vertex3xInput.value,
+    //   vertex3yInput.value
+    // );
   }
 
   // --- Initialization and Event Binding ---
@@ -425,6 +427,16 @@ document.addEventListener("DOMContentLoaded", () => {
   //         }
   //     }
   // });
+
+  downloadButton.addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.href =
+      "https://hsmkhexo.s3.ap-northeast-1.amazonaws.com/other/triangle_formula.json";
+    link.download = "triangle_formula.json"; // 下载时保存的文件名
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
 
   console.log("Triangle Integration Demo UI Initialized.");
 });
