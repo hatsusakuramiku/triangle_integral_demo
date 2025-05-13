@@ -27,5 +27,5 @@ def sort_formulas(file_path):
 
 
 if __name__ == "__main__":
-    # transform_formula_2dict("triangle_formula.json")
-    sort_formulas("triangle_formula.json")
+    transform_formula_2dict("triangle_formula.json")
+    # sort_formulas("triangle_formula.json")

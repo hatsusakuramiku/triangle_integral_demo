@@ -157,7 +157,7 @@ def get_formulas():
 
 def get_formulas_online():
     formula_url = (
-        "https://hsmkhexo.s3.ap-northeast-1.amazonaws.com/other/triangle_formula.json"
+        "https://hsmkhexo.s3.ap-northeast-1.amazonaws.com/other/triangle_formula1.json"
     )
     # try:
     response = requests.get(formula_url)
@@ -301,7 +301,7 @@ def calculate_integral():
                 )
 
         return jsonify(
-            {"result": float(integral_sum * calculate_triangle_square(vertices) * 2)}
+            {"result": float(integral_sum * calculate_triangle_square(vertices))}
         )
 
     except Exception as e:
