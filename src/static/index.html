@@ -83,6 +83,7 @@
             <!-- Right Panel -->
             <div class="panel right-panel">
                 <h2>积分节点分布情况图</h2>
+                <p>颜色支持 #RRGGBB 或 red, green, blue, cyan, magenta, yellow , black 等 </p>
                 <div>
                     <label for="node-color">积分节点颜色:</label>
                     <input type="text" id="node-color" value="red">
@@ -127,5 +128,12 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
+        <footer>
+            <center><p>&copy; <span id="year"></span> Created by <a
+                        href="https://hsmk.mikufans.date">Hatsusakuramiku</a></p></center>
+            </footer>
+            <script>
+            document.getElementById("year").textContent = new Date().getFullYear();
+        </script>
+        </body>
+    </html>
