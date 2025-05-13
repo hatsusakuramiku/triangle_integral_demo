@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   const calculationOutputDiv = document.getElementById("calculation-output");
   const startCalculationButton = document.getElementById("start-calculation");
-  const pauseResumeButton = document.getElementById("pause-resume-calculation");
-  const cancelCalculationButton = document.getElementById("cancel-calculation");
+  // const pauseResumeButton = document.getElementById("pause-resume-calculation");
+  // const cancelCalculationButton = document.getElementById("cancel-calculation");
   const initializeButton = document.getElementById("initialize-calculation");
 
   const nodeColorInput = document.getElementById("node-color");
@@ -177,8 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Reset button states
     startCalculationButton.disabled = false;
-    pauseResumeButton.disabled = true;
-    cancelCalculationButton.disabled = true;
+    // pauseResumeButton.disabled = true;
+    // cancelCalculationButton.disabled = true;
     saveImageButton.disabled = true;
     drawNodeDistributionButton.disabled = false;
 
@@ -371,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     calculationOutputDiv.textContent = "正在计算...";
     startCalculationButton.disabled = true;
-    cancelCalculationButton.disabled = false; // Enable cancel
+    // cancelCalculationButton.disabled = false; // Enable cancel
     // pauseResumeButton logic to be added if supported
 
     try {
@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
       calculationOutputDiv.textContent = `计算错误: ${error.message}`;
     } finally {
       startCalculationButton.disabled = false;
-      cancelCalculationButton.disabled = true;
+      // cancelCalculationButton.disabled = true;
     }
   });
 
