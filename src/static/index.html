@@ -63,6 +63,7 @@
                 <div>
                     <label for="custom-formula-nodes">自定义积分公式的节点及权重:</label>
                     <p>注意！输入的积分节点应当是面积坐标与积分权重，且与设定的三角形三顶点坐标一一对应！</p>
+                    <p>仅支持形式为 $I(f) = S\sum^n_{i = 1}{w_if(x_i,y_i)}$ 的积分公式，其中 $S$ 为三角形面积，$(x_i,y_i), w_i$ 分别为积分节点和权重</p>
                     <textarea id="custom-formula-nodes" rows="5"
                         placeholder="python或js样式的二维数组, n x 3"></textarea>
                 </div>
