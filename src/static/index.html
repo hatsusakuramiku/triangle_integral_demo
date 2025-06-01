@@ -8,15 +8,15 @@
         <script src="js/main.js"></script>
         <!-- KaTeX for LaTeX rendering -->
         <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
+            href="https://s4.zstatic.net/npm/katex@0.16.0/dist/katex.min.css"
             integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC"
             crossorigin="anonymous">
         <script defer
-            src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"
+            src="https://s4.zstatic.net/npm/katex@0.16.0/dist/katex.min.js"
             integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja"
             crossorigin="anonymous"></script>
         <script defer
-            src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
+            src="https://s4.zstatic.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js"
             integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR"
             crossorigin="anonymous"></script>
         <script>
@@ -63,7 +63,12 @@
                 <div>
                     <label for="custom-formula-nodes">自定义积分公式的节点及权重:</label>
                     <p>注意！输入的积分节点应当是面积坐标与积分权重，且与设定的三角形三顶点坐标一一对应！</p>
-                    <p>仅支持形式为 $I(f) = S\sum^n_{i = 1}{w_if(x_i,y_i)}=S\sum^n_{i = 1}{w_iJf(\lambda_1,\lambda_2)}$ 的积分公式，其中 $S$ 为三角形面积，$(x_i,y_i), w_i$ 分别为积分节点和权重, $\lambda_1, \lambda_2, \lambda_3$ 为三角形的面积坐标, $J$ 是 $(x,y)\rightarrow(\lambda_1, \lambda_2, \lambda_3)$ 的雅可比矩阵</p>
+                    <p>仅支持形式为 $I(f) = S\sum^n_{i = 1}{w_if(x_i,y_i)}=S\sum^n_{i
+                        = 1}{w_iJf(\lambda_1,\lambda_2)}$ 的积分公式，其中 $S$
+                        为三角形面积，$(x_i,y_i), w_i$ 分别为积分节点和权重, $\lambda_1,
+                        \lambda_2, \lambda_3$ 为三角形的面积坐标, $J$ 是
+                        $(x,y)\rightarrow(\lambda_1, \lambda_2, \lambda_3)$
+                        的雅可比矩阵</p>
                     <textarea id="custom-formula-nodes" rows="5"
                         placeholder="python或js样式的二维数组, n x 3"></textarea>
                 </div>
@@ -84,7 +89,8 @@
             <!-- Right Panel -->
             <div class="panel right-panel">
                 <h2>积分节点分布情况图</h2>
-                <p>颜色支持 #RRGGBB 或 red, green, blue, cyan, magenta, yellow , black 等 </p>
+                <p>颜色支持 #RRGGBB 或 red, green, blue, cyan, magenta, yellow ,
+                    black 等 </p>
                 <div>
                     <label for="node-color">积分节点颜色:</label>
                     <input type="text" id="node-color" value="red">
@@ -132,9 +138,9 @@
         <footer>
             <center><p>&copy; <span id="year"></span> Created by <a
                         href="https://hsmk.mikufans.date">Hatsusakuramiku</a></p></center>
-            </footer>
-            <script>
+        </footer>
+        <script>
             document.getElementById("year").textContent = new Date().getFullYear();
         </script>
-        </body>
-    </html>
+    </body>
+</html>
