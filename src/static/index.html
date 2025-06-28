@@ -140,7 +140,7 @@
                         href="https://hsmk.mikufans.date">Hatsusakuramiku</a></p></center>
         </footer>
         <script>
-            document.getElementById("year").textContent = new Date().getFullYear();
+            document.getElementById("year").textContent = new Date().getFullYear() == 2025 ? "2025" : "2025 - " +  new Date().getFullYear();
         </script>
     </body>
 </html>
